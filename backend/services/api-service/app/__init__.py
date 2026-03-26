@@ -18,6 +18,4 @@ def create_app():
     app.register_blueprint(api_bp)
 
 
-    print("API Service initialized")
-
     return app
