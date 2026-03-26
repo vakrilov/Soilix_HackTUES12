@@ -9,14 +9,13 @@ def create_app():
     supabase_key = app.config.get("SUPABASE_KEY")
     if not supabase_url or not supabase_key:
         raise RuntimeError("Missing SUPABASE_URL or SUPABASE_KEY")
-
+    
     supabase: Client = create_client(supabase_url, supabase_key)
-
-
+    app.extensions["supabase_client"] = supabase
+    print("Supabase client initialized")
 
     from .routes import api_bp
     app.register_blueprint(api_bp)
 
-    print("API Service initialized with config:")
 
     return app
