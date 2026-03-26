@@ -1,13 +1,22 @@
 from flask import Flask
-from .models import db
+from supabase import create_client, Client
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("app.config.Config")
 
-    db.init_app(app)
+    supabase_url = app.config.get("SUPABASE_URL")
+    supabase_key = app.config.get("SUPABASE_KEY")
+    if not supabase_url or not supabase_key:
+        raise RuntimeError("Missing SUPABASE_URL or SUPABASE_KEY")
+
+    supabase: Client = create_client(supabase_url, supabase_key)
+
+
 
     from .routes import api_bp
     app.register_blueprint(api_bp)
+
+    print("API Service initialized with config:")
 
     return app

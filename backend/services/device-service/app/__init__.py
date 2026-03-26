@@ -6,4 +6,6 @@ def create_app():
     from .routes import device_bp
     app.register_blueprint(device_bp)
 
+    print("Device Service initialized with config:")
+
     return app
